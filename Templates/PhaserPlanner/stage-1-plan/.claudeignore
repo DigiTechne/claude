@@ -1,0 +1,3 @@
+# Prevent auto-loading all session files into context.
+# Stage 1 generates sessions one at a time — no need to load them all.
+output/sessions/

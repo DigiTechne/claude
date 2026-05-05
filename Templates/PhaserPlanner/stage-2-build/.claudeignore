@@ -1,0 +1,3 @@
+# Prevent auto-loading all session files into context.
+# Stage 2 loads one session at a time as needed.
+inputs/sessions/
