@@ -1,0 +1,48 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: https://${DOMAIN}
+      NEXT_PUBLIC_APP_URL: https://${DOMAIN}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      NODE_ENV: production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "{{upstreams 3000}}"
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - caddy_data:/data
+    depends_on:
+      - app
+
+volumes:
+  postgres_data:
+  caddy_data:
