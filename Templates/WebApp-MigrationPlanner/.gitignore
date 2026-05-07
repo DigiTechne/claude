@@ -1,0 +1,17 @@
+# Old app snapshots — never commit source code from the app being migrated
+stage-1-plan/inputs/old-app/*
+!stage-1-plan/inputs/old-app/.gitkeep
+stage-2-build/inputs/old-app/*
+!stage-2-build/inputs/old-app/.gitkeep
+
+# Runtime state and generated outputs — these are per-migration-clone artifacts
+stage-1-plan/working/stage-1-state.md
+stage-1-plan/output/project-brief.md
+stage-1-plan/output/tech-stack.md
+stage-1-plan/output/sessions/*.md
+
+stage-2-build/inputs/project-brief.md
+stage-2-build/inputs/tech-stack.md
+stage-2-build/inputs/sessions/*.md
+stage-2-build/working/build-state.md
+stage-2-build/output/build-log.md

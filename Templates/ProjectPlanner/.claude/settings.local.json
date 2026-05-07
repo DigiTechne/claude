@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x bin/*.sh)",
+      "Bash(bash bin/status.sh)",
+      "Bash(bash bin/handoff.sh 0 1)",
+      "Bash(bash bin/handoff.sh 1 2)",
+      "Bash(bash bin/reset.sh 0)",
+      "Bash(bash bin/reset.sh 1)",
+      "Bash(bash bin/reset.sh 2)"
+    ]
+  }
+}
